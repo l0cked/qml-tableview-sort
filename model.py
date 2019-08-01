@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QSortFilterProxyModel, pyqtProperty, QAbstractItemModel, QObject, pyqtSignal, QAbstractListModel, Qt, QModelIndex, pyqtSlot, QVariant
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QSortFilterProxyModel, QAbstractItemModel, QObject, QAbstractListModel, Qt, QModelIndex, QVariant
 
 
 class MyItem(QObject):

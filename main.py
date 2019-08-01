@@ -1,6 +1,5 @@
 from model import MyModel, SortFilterProxyModel
-from PyQt5.QtQml import qmlRegisterType
-from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PyQt5.QtWidgets import QApplication
 
 
