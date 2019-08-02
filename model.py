@@ -7,7 +7,7 @@ class TableModel(QAbstractListModel):
     def __init__(self, *roles):
         super().__init__()
         self.roles = {}
-        self.items = []
+        self.rows = []
         n = 0
         for role in roles:
             n += 1
@@ -19,37 +19,37 @@ class TableModel(QAbstractListModel):
         return self.roles
 
     def rowCount(self, parent=QModelIndex()):
-        return len(self.items)
+        return len(self.rows)
 
     def data(self, index, role=Qt.DisplayRole):
         if role in self.roles:
-            ret = self.items[index.row()][self.roles[role].decode()]
+            ret = self.rows[index.row()][self.roles[role].decode()]
             if type(ret) == QDateTime:
                 return ret.toString('dd-MM-yyyy HH:mm:ss')
             return ret
 
     @pyqtSlot(tuple)
-    def addItem(self, item):
-        self.addItems([item])
+    def addRow(self, row):
+        self.addRows([row])
 
     @pyqtSlot(list)
-    def addItems(self, items):
+    def addRows(self, rows):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-        for item in items:
-            newitem = {}
+        for row in rows:
+            item = {}
             n = 0
             for key, role in self.roles.items():
                 value = None
-                data = item[n]
+                data = row[n]
                 try:
                     value = float(data)
                 except:
                     value = QDateTime.fromString(str(data), 'yyyy-MM-dd HH:mm:ss')
                     if not value:
                         value = str(data)
-                newitem[role.decode()] = value
+                item[role.decode()] = value
                 n += 1
-            self.items.append(newitem)
+            self.rows.append(item)
         self.endInsertRows()
 
 
@@ -70,9 +70,9 @@ class SortFilterProxyModel(QSortFilterProxyModel):
 
         self.setSortRole(key)
         super().sort(0, order)
-        self.sortend.emit(len(self.source.items), time.time()-start)
+        self.sortend.emit(len(self.source.rows), time.time()-start)
 
     def lessThan(self, left, right):
-        if self.source.items[left.row()][self.currentSortRole] < self.source.items[right.row()][self.currentSortRole]:
+        if self.source.rows[left.row()][self.currentSortRole] < self.source.rows[right.row()][self.currentSortRole]:
             return True
         return False

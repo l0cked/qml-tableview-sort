@@ -14,14 +14,14 @@ class Main(QQmlApplicationEngine):
         super().__init__()
 
         self.tableModel = TableModel('Id', 'Num', 'Str')
-        self.tableModel.addItem((-1, 0, 'Test .addItem()'))
-        self.tableModel.addItems([(_, random.uniform(-5, 5), f'{_}_str_{_}') for _ in range(10000)])
+        self.tableModel.addRow((-1, 0, 'Test .addItem()'))
+        self.tableModel.addRows([(_, random.uniform(-5, 5), f'{_}_str_{_}') for _ in range(1000)])
         self.sortModel = SortFilterProxyModel(self.tableModel)
         self.sortModel.sortend.connect(self.sortEnd)
         self.rootContext().setContextProperty('sortModel', self.sortModel)
 
         self.tableModel2 = TableModel('Dt', 'Name', 'LastName')
-        self.tableModel2.addItems([(self.rndDt(), self.rndWorld(), self.rndWorld()) for _ in range(10000)])
+        self.tableModel2.addRows([(self.rndDt(), self.rndWorld(), self.rndWorld()) for _ in range(1000)])
         self.sortModel2 = SortFilterProxyModel(self.tableModel2)
         self.sortModel2.sortend.connect(self.sortEnd)
         self.rootContext().setContextProperty('sortModel2', self.sortModel2)
@@ -35,12 +35,11 @@ class Main(QQmlApplicationEngine):
         return datetime.fromtimestamp(random.randint(1, int(time.time())))
 
     def rndWorld(self):
-        big = 'ABCDEFGHIKLMNOPQRSTVXYZ'
         chrs = 'abcdefghiklmnopqrstvxyz'
-        return big[random.randint(0, len(big)-1)] + ''.join(random.choice(chrs) for _ in range(random.randint(4, 10)))
+        return chrs[random.randint(0, len(chrs)-1)].upper() + ''.join(random.choice(chrs) for _ in range(random.randint(4, 10)))
 
     def sortEnd(self, items, time):
-        self.footer.setProperty('text', f'Sorting {items} items in {time:.2f} sec')
+        self.footer.setProperty('text', f'Sorting {items} rows in {time:.2f} sec')
 
 
 Main()
