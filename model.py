@@ -1,4 +1,5 @@
-from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QAbstractListModel, QSortFilterProxyModel, QModelIndex
+from datetime import datetime
+from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QAbstractListModel, QSortFilterProxyModel, QModelIndex, QDateTime
 import time
 
 
@@ -22,7 +23,10 @@ class TableModel(QAbstractListModel):
 
     def data(self, index, role=Qt.DisplayRole):
         if role in self.roles:
-            return self.items[index.row()][self.roles[role].decode()]
+            ret = self.items[index.row()][self.roles[role].decode()]
+            if type(ret) == QDateTime:
+                return ret.toString('dd-MM-yyyy HH:mm:ss')
+            return ret
 
     @pyqtSlot(tuple)
     def addItem(self, item):
@@ -35,10 +39,14 @@ class TableModel(QAbstractListModel):
             newitem = {}
             n = 0
             for key, role in self.roles.items():
+                value = None
+                data = item[n]
                 try:
-                    value = float(item[n])
+                    value = float(data)
                 except:
-                    value = str(item[n])
+                    value = QDateTime.fromString(str(data), 'yyyy-MM-dd HH:mm:ss')
+                    if not value:
+                        value = str(data)
                 newitem[role.decode()] = value
                 n += 1
             self.items.append(newitem)

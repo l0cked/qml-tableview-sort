@@ -19,7 +19,6 @@ ApplicationWindow {
                 model: sortModel
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                frameVisible: false
                 alternatingRowColors: false
                 sortIndicatorVisible: true
                 onSortIndicatorOrderChanged: model.sort(sortIndicatorColumn, sortIndicatorOrder)
@@ -41,11 +40,14 @@ ApplicationWindow {
                 model: sortModel2
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                frameVisible: false
                 alternatingRowColors: false
                 sortIndicatorVisible: true
                 onSortIndicatorOrderChanged: model.sort(sortIndicatorColumn, sortIndicatorOrder)
                 onSortIndicatorColumnChanged: model.sort(sortIndicatorColumn, sortIndicatorOrder)
+                TableViewColumn {
+                    title: "Datetime"
+                    role: "dt"
+                }
                 TableViewColumn {
                     title: "Name"
                     role: "name"
