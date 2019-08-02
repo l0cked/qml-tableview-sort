@@ -24,19 +24,24 @@ class TableModel(QAbstractListModel):
         if role in self.roles:
             return self.items[index.row()][self.roles[role].decode()]
 
-    @pyqtSlot()
-    def addItem(self, *args):
-        item = {}
-        n = 0
-        for key, role in self.roles.items():
-            try:
-                value = float(args[n])
-            except:
-                value = str(args[n])
-            item[role.decode()] = value
-            n += 1
+    @pyqtSlot(tuple)
+    def addItem(self, item):
+        self.addItems([item])
+
+    @pyqtSlot(list)
+    def addItems(self, items):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-        self.items.append(item)
+        for item in items:
+            newitem = {}
+            n = 0
+            for key, role in self.roles.items():
+                try:
+                    value = float(item[n])
+                except:
+                    value = str(item[n])
+                newitem[role.decode()] = value
+                n += 1
+            self.items.append(newitem)
         self.endInsertRows()
 
 

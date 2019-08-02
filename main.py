@@ -12,7 +12,8 @@ class Main(QQmlApplicationEngine):
         super().__init__()
 
         self.tableModel = TableModel('Id', 'Num', 'Str')
-        [self.tableModel.addItem(_, random.uniform(-5, 5), f'{_}_str_{_}') for _ in range(10000)]
+        self.tableModel.addItem((0, 0, 'Test .addItem()'))
+        self.tableModel.addItems([(_, random.uniform(-5, 5), f'{_}_str_{_}') for _ in range(10000)])
         self.sortModel = SortFilterProxyModel(self.tableModel)
         self.sortModel.sortend.connect(self.sortEnd)
         self.rootContext().setContextProperty('sortModel', self.sortModel)
@@ -25,7 +26,7 @@ class Main(QQmlApplicationEngine):
             ('Tilda', 'Svitton'),
             ('Andrea', 'Mutti'),
             ('Ben', 'Stiffler')]
-        [self.tableModel2.addItem(item[0], item[1]) for item in items]
+        self.tableModel2.addItems([(item[0], item[1]) for item in items])
         self.sortModel2 = SortFilterProxyModel(self.tableModel2)
         self.sortModel2.sortend.connect(self.sortEnd)
         self.rootContext().setContextProperty('sortModel2', self.sortModel2)
