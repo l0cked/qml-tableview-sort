@@ -11,7 +11,8 @@ QML TableView sorting: QDateTime, float, str
 
 2#
 ----
-[x] - Windows 10
-[x] - Python 3
-[x] - PyQt5
-[x] - QML
+.. code-block::
+Windows 10
+Python 3
+PyQt5
+QML
