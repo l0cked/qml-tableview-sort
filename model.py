@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSlot, QSortFilterProxyModel, QAbstractItemModel, QAbstractListModel, Qt
+from PyQt5.QtCore import Qt, pyqtSlot, QAbstractListModel, QSortFilterProxyModel
 
 
 class TableModel(QAbstractListModel):
@@ -14,11 +14,11 @@ class TableModel(QAbstractListModel):
     _items = [
         {'id': '1', 'num': '17', 'name': 'Angel', 'lastname': 'Braun'},
         {'id': '2', 'num': '18', 'name': 'Bart', 'lastname': 'Jhon'},
-        {'id': '3', 'num': '19', 'name': 'Cecil', 'lastname': 'Simpson'},
+        {'id': '3', 'num': '1', 'name': 'Cecil', 'lastname': 'Simpson'},
         {'id': '4', 'num': '20', 'name': 'Dart', 'lastname': 'Tramp'},
         {'id': '5', 'num': '121', 'name': 'Evgen', 'lastname': 'Ivanova'},
-        {'id': '6', 'num': '22', 'name': 'Klaudia', 'lastname': 'Shiffer'},
-        {'id': '23', 'num': '23', 'name': 'Test', 'lastname': 'Fail'},
+        {'id': '6', 'num': '1.22', 'name': 'Klaudia', 'lastname': 'Shiffer'},
+        {'id': '23', 'num': '.02', 'name': 'Test', 'lastname': 'Fail'},
         {'id': '1123', 'num': '.01', 'name': 'Olya', 'lastname': 'BigTits'}]
 
     def __init__(self):
