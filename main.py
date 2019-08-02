@@ -8,9 +8,8 @@ class Main(QQmlApplicationEngine):
 
     def __init__(self):
         super().__init__()
-        self.sortModel = SortFilterProxyModel()
-        self.sortModel.source = TableModel()
-        self.rootContext().setContextProperty('sortModel', self.sortModel)
+        self.tableModel = SortFilterProxyModel(TableModel())
+        self.rootContext().setContextProperty('tableModel', self.tableModel)
         self.load('main.qml')
         self.app.exec_()
 

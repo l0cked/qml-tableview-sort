@@ -3,7 +3,7 @@ import QtQuick.Controls 1.1
 
 
 ApplicationWindow {
-    width: 400
+    width: 450
     height: 200
     visible: true
     title: "qml-tableview-sort"
@@ -14,7 +14,7 @@ ApplicationWindow {
         TableView {
             id: tableView
             anchors.fill: parent
-            model: sortModel
+            model: tableModel
             sortIndicatorVisible: true
             onSortIndicatorOrderChanged: model.sort(sortIndicatorColumn, sortIndicatorOrder)
             onSortIndicatorColumnChanged: model.sort(sortIndicatorColumn, sortIndicatorOrder)

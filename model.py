@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtProperty, pyqtSlot, QSortFilterProxyModel, QAbstractItemModel, QAbstractListModel, Qt, QModelIndex
+from PyQt5.QtCore import pyqtSlot, QSortFilterProxyModel, QAbstractItemModel, QAbstractListModel, Qt
 
 
 class TableModel(QAbstractListModel):
@@ -11,63 +11,58 @@ class TableModel(QAbstractListModel):
         NumRole: b'num',
         NameRole: b'name',
         LastNameRole: b'lastname'}
+    _items = [
+        {'id': '1', 'num': '17', 'name': 'Angel', 'lastname': 'Braun'},
+        {'id': '2', 'num': '18', 'name': 'Bart', 'lastname': 'Jhon'},
+        {'id': '3', 'num': '19', 'name': 'Cecil', 'lastname': 'Simpson'},
+        {'id': '4', 'num': '20', 'name': 'Dart', 'lastname': 'Tramp'},
+        {'id': '5', 'num': '121', 'name': 'Evgen', 'lastname': 'Ivanova'},
+        {'id': '6', 'num': '22', 'name': 'Klaudia', 'lastname': 'Shiffer'},
+        {'id': '23', 'num': '23', 'name': 'Test', 'lastname': 'Fail'},
+        {'id': '1123', 'num': '.01', 'name': 'Olya', 'lastname': 'BigTits'}]
 
     def __init__(self):
         super().__init__()
-        self.items = [
-            {'id': '1', 'num': '17', 'name': 'Angel', 'lastname': 'Braun'},
-            {'id': '2', 'num': '18', 'name': 'Bart', 'lastname': 'Jhon'},
-            {'id': '3', 'num': '19', 'name': 'Cecil', 'lastname': 'Simpson'},
-            {'id': '4', 'num': '20', 'name': 'Dart', 'lastname': 'Tramp'},
-            {'id': '5', 'num': '121', 'name': 'Evgen', 'lastname': 'Ivanova'},
-            {'id': '6', 'num': '22', 'name': 'Klaudia', 'lastname': 'Shiffer'},
-            {'id': '23', 'num': '23', 'name': 'Test', 'lastname': 'Fail'},
-            {'id': '1123', 'num': '.01', 'name': 'Olya', 'lastname': 'BigTits'},
-            ]
 
     def roleNames(self):
         return self._roles
 
-    def rowCount(self, parent=QModelIndex()):
-        return len(self.items)
+    def rowCount(self, parent):
+        return len(self._items)
 
     def data(self, index, role=Qt.DisplayRole):
         row = index.row()
         if role == self.IdRole:
-            return self.items[row]['id']
+            return self._items[row]['id']
         if role == self.NumRole:
-            return self.items[row]['num']
+            return self._items[row]['num']
         if role == self.NameRole:
-            return self.items[row]['name']
+            return self._items[row]['name']
         if role == self.LastNameRole:
-            return self.items[row]['lastname']
+            return self._items[row]['lastname']
 
 
 class SortFilterProxyModel(QSortFilterProxyModel):
-    def __init__(self):
+    def __init__(self, source):
         super().__init__()
-
-    @pyqtProperty(QAbstractItemModel)
-    def source(self):
-        return self._source
-
-    @source.setter
-    def source(self, source):
         self.setSourceModel(source)
         self._source = source
 
     @pyqtSlot(int, int)
     def sort(self, column, order):
+        roles = self._source._roles
+        key = list(roles)[column]
+
         self._column = column
-        key = list(self._source._roles)[column]
-        self._role = self._source._roles[key].decode("utf-8")
+        self._role = roles[key].decode()
+
         self.setSortRole(key)
         super().sort(0, order)
 
     def lessThan(self, left, right):
         l = left.row()
         r = right.row()
-        i = self._source.items
+        i = self._source._items
         try:
             if int(i[l][self._role]) < int(i[r][self._role]):
                 return True
