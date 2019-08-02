@@ -1,11 +1,16 @@
-qml-tableview-sort -- Sorting QML TableView
+qml-tableview-sort -- QML TableView sorting
 =======================================================================
 
+WHAT
+----
+QML TableView sorting: QDateTime, float, str
 
-Sorting QML TableView: QDateTime, float, str
-
+WHERE
+-----
 **QSortFilterProxyModel.lessThan** - speeds up work, you can do without it
 
+THAN
+----
 Windows 10
 Python 3
 PyQt5
